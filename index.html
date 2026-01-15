@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirigiendo...</title>
+    <script>
+        window.onload = function () {
+            var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            // iOS
+            if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                window.location.href = "https://apps.apple.com/app/id6444501045";
+                return;
+            }
+
+            // Android
+            if (/android/i.test(userAgent)) {
+                window.location.href = "https://play.google.com/store/apps/details?id=es.gva.san";
+                return;
+            }
+
+            // Otros (PC, Mac, etc.)
+            window.location.href = "https://gvasanidad.es";
+        };
+    </script>
+</head>
+<body>
+    <p>Redirigiendo…</p>
+</body>
+</html>
