@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enrique Tortosa Soriano — Desarrollo de Apps</title>
+    <meta name="description" content="Desarrollo de aplicaciones móviles iOS y Android. Creador de Bolsa Sanidad GVA y CasaIA - BOE.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,800;1,9..144,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #FAFAF8;
+            --color-surface: #FFFFFF;
+            --color-text: #1A1A1A;
+            --color-text-secondary: #5A5A5A;
+            --color-accent: #2563EB;
+            --color-accent-soft: #EFF6FF;
+            --color-border: #E8E8E4;
+            --color-dark: #111111;
+            --font-display: 'Fraunces', serif;
+            --font-body: 'DM Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: rgba(250, 250, 248, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .nav-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0.9rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-logo {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.15rem;
+            color: var(--color-text);
+            text-decoration: none;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--color-text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+
+        .nav-toggle {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 22px;
+            height: 2px;
+            background: var(--color-text);
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 6rem 1.5rem 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -40%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(37, 99, 235, 0.06) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            max-width: 720px;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--color-accent-soft);
+            color: var(--color-accent);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.4rem 1rem;
+            border-radius: 100px;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: clamp(2.4rem, 5.5vw, 3.8rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.2rem;
+            color: var(--color-text);
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--color-accent);
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+            max-width: 540px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--color-dark);
+            color: #fff;
+            padding: 0.85rem 2rem;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-cta svg {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.2s;
+        }
+
+        .hero-cta:hover svg {
+            transform: translateX(3px);
+        }
+
+        /* ── SECTIONS ── */
+        section {
+            padding: 5rem 1.5rem;
+        }
+
+        .section-container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--color-accent);
+            margin-bottom: 0.8rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+        }
+
+        .section-desc {
+            color: var(--color-text-secondary);
+            max-width: 560px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 3rem;
+        }
+
+        /* ── APPS GRID ── */
+        #apps {
+            background: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .app-card {
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.25s, box-shadow 0.25s;
+        }
+
+        .app-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+        }
+
+        .app-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        .app-card:nth-child(1) .app-icon {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+        }
+
+        .app-card:nth-child(2) .app-icon {
+            background: linear-gradient(135deg, #6366F1, #4F46E5);
+            color: white;
+        }
+
+        .app-card:nth-child(3) .app-icon {
+            background: linear-gradient(135deg, #F59E0B, #D97706);
+            color: white;
+        }
+
+        .app-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .app-card .app-platform {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--color-accent);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            margin-bottom: 0.75rem;
+        }
+
+        .app-card p {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .app-stats {
+            margin-top: 1.2rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--color-border);
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .app-stat {
+            font-size: 0.82rem;
+            color: var(--color-text-secondary);
+        }
+
+        .app-stat strong {
+            display: block;
+            font-size: 1.3rem;
+            color: var(--color-text);
+            font-family: var(--font-display);
+            font-weight: 700;
+        }
+
+        /* ── SERVICIOS ── */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.2rem;
+        }
+
+        .service-item {
+            padding: 1.5rem;
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            background: var(--color-surface);
+        }
+
+        .service-item h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .service-item p {
+            font-size: 0.9rem;
+            color: var(--color-text-secondary);
+            line-height: 1.55;
+        }
+
+        .service-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        /* ── SOBRE MÍ ── */
+        #sobre-mi {
+            background: var(--color-surface);
+            border-top: 1px solid var(--color-border);
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .about-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            color: var(--color-text-secondary);
+            font-size: 1rem;
+            line-height: 1.75;
+            margin-bottom: 1rem;
+        }
+
+        .about-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .about-detail {
+            padding: 1.2rem;
+            background: var(--color-bg);
+            border-radius: 12px;
+            border: 1px solid var(--color-border);
+        }
+
+        .about-detail .label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--color-text-secondary);
+            margin-bottom: 0.3rem;
+        }
+
+        .about-detail .value {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* ── CONTACTO ── */
+        #contacto .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .contact-card {
+            padding: 2rem;
+            background: var(--color-surface);
+            border: 1px solid var(--color-border);
+            border-radius: 14px;
+            text-align: center;
+        }
+
+        .contact-card .contact-icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .contact-card h3 {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .contact-card p {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .contact-card a {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .contact-card a:hover {
+            text-decoration: underline;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--color-dark);
+            color: #ccc;
+            padding: 3rem 1.5rem;
+        }
+
+        .footer-inner {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-brand {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #fff;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-brand-desc {
+            font-size: 0.85rem;
+            color: #888;
+            max-width: 300px;
+            line-height: 1.6;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #999;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #2a2a2a;
+            padding-top: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-copy {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-legal a {
+            font-size: 0.8rem;
+            color: #666;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-legal a:hover {
+            color: #ccc;
+        }
+
+        /* ── LEGAL PAGES ── */
+        .legal-section {
+            display: none;
+            padding: 8rem 1.5rem 5rem;
+            min-height: 100vh;
+        }
+
+        .legal-section.active {
+            display: block;
+        }
+
+        .legal-section .section-container {
+            max-width: 760px;
+        }
+
+        .legal-section h2 {
+            font-family: var(--font-display);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .legal-section .legal-date {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            margin-bottom: 2rem;
+        }
+
+        .legal-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .legal-section p {
+            color: var(--color-text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.75;
+            margin-bottom: 0.8rem;
+        }
+
+        .legal-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: var(--color-accent);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 2rem;
+        }
+
+        .legal-back:hover {
+            text-decoration: underline;
+        }
+
+        /* ── ANIMATIONS ── */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(250, 250, 248, 0.98);
+                backdrop-filter: blur(12px);
+                flex-direction: column;
+                padding: 1rem 1.5rem;
+                gap: 0.8rem;
+                border-bottom: 1px solid var(--color-border);
+            }
+
+            .nav-links.open {
+                display: flex;
+            }
+
+            .nav-toggle {
+                display: block;
+            }
+
+            .about-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .apps-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-top {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ════ MAIN SITE ════ -->
+    <div id="main-site">
+
+        <!-- NAV -->
+        <nav>
+            <div class="nav-inner">
+                <a href="#" class="nav-logo">E. Tortosa</a>
+                <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menú">
+                    <span></span><span></span><span></span>
+                </button>
+                <ul class="nav-links">
+                    <li><a href="#apps">Apps</a></li>
+                    <li><a href="#servicios">Servicios</a></li>
+                    <li><a href="#sobre-mi">Sobre mí</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- HERO -->
+        <section class="hero">
+            <div class="hero-content fade-in">
+                <span class="hero-badge">Desarrollador independiente</span>
+                <h1>Apps que resuelven problemas <em>reales</em></h1>
+                <p>Desarrollo aplicaciones móviles para iOS y Android orientadas a facilitar el acceso a la información pública en España. Más de 30.000 usuarios activos confían en mis soluciones.</p>
+                <a href="#apps" class="hero-cta">
+                    Ver proyectos
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+                </a>
+            </div>
+        </section>
+
+        <!-- APPS -->
+        <section id="apps">
+            <div class="section-container">
+                <p class="section-label">Proyectos</p>
+                <h2 class="section-title">Aplicaciones publicadas</h2>
+                <p class="section-desc">Aplicaciones disponibles en App Store y Google Play, diseñadas para cubrir necesidades reales de miles de usuarios en España.</p>
+
+                <div class="apps-grid">
+                    <div class="app-card fade-in">
+                        <div class="app-icon">B</div>
+                        <div class="app-platform">iOS &middot; Android</div>
+                        <h3>Bolsa Sanidad GVA</h3>
+                        <p>Consulta y seguimiento de las bolsas de empleo del sistema sanitario de la Generalitat Valenciana. Notificaciones en tiempo real de actualizaciones y nuevas publicaciones.</p>
+                        <div class="app-stats">
+                            <div class="app-stat">
+                                <strong>30K+</strong>
+                                Usuarios activos
+                            </div>
+                            <div class="app-stat">
+                                <strong>4.8★</strong>
+                                Valoración media
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="app-card fade-in">
+                        <div class="app-icon">C</div>
+                        <div class="app-platform">iOS &middot; Android</div>
+                        <h3>CasaIA — BOE</h3>
+                        <p>Acceso inteligente al Boletín Oficial del Estado. Utiliza inteligencia artificial para facilitar la búsqueda y comprensión de documentos oficiales publicados.</p>
+                        <div class="app-stats">
+                            <div class="app-stat">
+                                <strong>IA</strong>
+                                Búsqueda asistida
+                            </div>
+                            <div class="app-stat">
+                                <strong>BOE</strong>
+                                Datos oficiales
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="app-card fade-in">
+                        <div class="app-icon">D</div>
+                        <div class="app-platform">iOS &middot; Android</div>
+                        <h3>Data for Admob</h3>
+                        <p>Herramienta para desarrolladores que permite monitorizar métricas y rendimiento de las campañas de AdMob de forma rápida y visual desde el móvil.</p>
+                        <div class="app-stats">
+                            <div class="app-stat">
+                                <strong>Dev</strong>
+                                Para desarrolladores
+                            </div>
+                            <div class="app-stat">
+                                <strong>AdMob</strong>
+                                Integración directa
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICIOS -->
+        <section id="servicios">
+            <div class="section-container">
+                <p class="section-label">Servicios</p>
+                <h2 class="section-title">Qué puedo ofrecerte</h2>
+                <p class="section-desc">Desarrollo integral de aplicaciones móviles nativas, desde la conceptualización hasta la publicación y mantenimiento.</p>
+
+                <div class="services-grid">
+                    <div class="service-item fade-in">
+                        <div class="service-icon">📱</div>
+                        <h3>Desarrollo iOS</h3>
+                        <p>Apps nativas con Swift y SwiftUI, optimizadas para el ecosistema Apple.</p>
+                    </div>
+                    <div class="service-item fade-in">
+                        <div class="service-icon">🤖</div>
+                        <h3>Desarrollo Android</h3>
+                        <p>Apps nativas con Kotlin y Jetpack Compose para todo el ecosistema Android.</p>
+                    </div>
+                    <div class="service-item fade-in">
+                        <div class="service-icon">🔔</div>
+                        <h3>Notificaciones push</h3>
+                        <p>Sistemas de alertas en tiempo real mediante Firebase Cloud Messaging.</p>
+                    </div>
+                    <div class="service-item fade-in">
+                        <div class="service-icon">📊</div>
+                        <h3>Analítica y monetización</h3>
+                        <p>Integración de AdMob, RevenueCat, Firebase Analytics y estrategias de suscripción.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOBRE MÍ -->
+        <section id="sobre-mi">
+            <div class="section-container">
+                <div class="about-layout">
+                    <div>
+                        <p class="section-label">Sobre mí</p>
+                        <h2 class="section-title">Enrique Tortosa Soriano</h2>
+                        <div class="about-text">
+                            <p>Desarrollador de aplicaciones móviles independiente con sede en la Comunidad Valenciana, España. Me especializo en crear soluciones digitales que faciliten el acceso a la información pública para ciudadanos y profesionales.</p>
+                            <p>Mis aplicaciones se centran en el sector público español, transformando datos complejos de administraciones públicas en herramientas accesibles e intuitivas para el usuario final.</p>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="about-details fade-in">
+                            <div class="about-detail">
+                                <div class="label">Ubicación</div>
+                                <div class="value">Comunidad Valenciana, España</div>
+                            </div>
+                            <div class="about-detail">
+                                <div class="label">Actividad</div>
+                                <div class="value">Autónomo — Desarrollo de apps</div>
+                            </div>
+                            <div class="about-detail">
+                                <div class="label">Plataformas</div>
+                                <div class="value">iOS (Swift) &middot; Android (Kotlin)</div>
+                            </div>
+                            <div class="about-detail">
+                                <div class="label">Tecnologías</div>
+                                <div class="value">Firebase &middot; RevenueCat &middot; AdMob</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACTO -->
+        <section id="contacto">
+            <div class="section-container">
+                <p class="section-label">Contacto</p>
+                <h2 class="section-title">Hablemos</h2>
+                <p class="section-desc">Si tienes alguna consulta sobre mis aplicaciones o quieres hablar sobre un proyecto, no dudes en contactarme.</p>
+
+                <div class="contact-grid">
+                    <div class="contact-card fade-in">
+                        <div class="contact-icon">✉️</div>
+                        <h3>Email</h3>
+                        <p><a href="mailto:softwareqts@gmail.com">softwareqts@gmail.com</a></p>
+                    </div>
+                    <div class="contact-card fade-in">
+                        <div class="contact-icon">📍</div>
+                        <h3>Ubicación</h3>
+                        <p>Comunidad Valenciana, España</p>
+                    </div>
+                    <div class="contact-card fade-in">
+                        <div class="contact-icon">📞</div>
+                        <h3>Teléfono</h3>
+                        <p><a href="tel:+3466996751">+34 669 967 51</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="footer-inner">
+                <div class="footer-top">
+                    <div>
+                        <div class="footer-brand">Enrique Tortosa Soriano</div>
+                        <p class="footer-brand-desc">Desarrollo de aplicaciones móviles para iOS y Android. Autónomo registrado en España.</p>
+                    </div>
+                    <div class="footer-links">
+                        <a href="#apps">Apps</a>
+                        <a href="#servicios">Servicios</a>
+                        <a href="#sobre-mi">Sobre mí</a>
+                        <a href="#contacto">Contacto</a>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <span class="footer-copy">&copy; 2025 Enrique Tortosa Soriano. Todos los derechos reservados.</span>
+                    <div class="footer-legal">
+                        <a href="#" onclick="showLegal('privacy'); return false;">Política de privacidad</a>
+                        <a href="#" onclick="showLegal('terms'); return false;">Aviso legal</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ════ POLÍTICA DE PRIVACIDAD ════ -->
+    <div id="privacy" class="legal-section">
+        <div class="section-container">
+            <a href="#" class="legal-back" onclick="hideLegal(); return false;">← Volver al inicio</a>
+            <h2>Política de Privacidad</h2>
+            <p class="legal-date">Última actualización: marzo 2026</p>
+
+            <h3>1. Responsable del tratamiento</h3>
+            <p>Enrique Tortosa Soriano, con domicilio en la Comunidad Valenciana (España), es el responsable del tratamiento de los datos personales recogidos a través de este sitio web y de las aplicaciones móviles publicadas.</p>
+
+            <h3>2. Datos que recopilamos</h3>
+            <p>A través de este sitio web no se recopilan datos personales de forma directa. En nuestras aplicaciones móviles, podemos recopilar datos analíticos anónimos con el fin de mejorar la experiencia de usuario, tales como estadísticas de uso, tipo de dispositivo y versión del sistema operativo.</p>
+
+            <h3>3. Finalidad del tratamiento</h3>
+            <p>Los datos recopilados se utilizan exclusivamente para mejorar el funcionamiento y rendimiento de las aplicaciones, gestionar los servicios de suscripción y mostrar publicidad personalizada o no personalizada según las preferencias del usuario.</p>
+
+            <h3>4. Base legal</h3>
+            <p>El tratamiento de datos se basa en el consentimiento del usuario (art. 6.1.a RGPD) y en el interés legítimo del responsable (art. 6.1.f RGPD) para la mejora de los servicios ofrecidos.</p>
+
+            <h3>5. Servicios de terceros</h3>
+            <p>Nuestras aplicaciones pueden utilizar servicios de terceros que recopilan datos de forma independiente, incluyendo: Google AdMob (publicidad), Google Firebase (analítica y notificaciones), RevenueCat (gestión de suscripciones) y Apple/Google (tiendas de aplicaciones). Cada uno de estos servicios tiene su propia política de privacidad.</p>
+
+            <h3>6. Derechos del usuario</h3>
+            <p>Conforme al Reglamento General de Protección de Datos (RGPD) y la Ley Orgánica 3/2018 (LOPDGDD), el usuario tiene derecho a acceder, rectificar, suprimir, limitar el tratamiento, portar y oponerse al tratamiento de sus datos personales. Para ejercer estos derechos, puede contactar a través del email indicado en la sección de contacto.</p>
+
+            <h3>7. Conservación de datos</h3>
+            <p>Los datos se conservarán durante el tiempo necesario para cumplir con las finalidades descritas, o hasta que el usuario ejerza su derecho de supresión.</p>
+
+            <h3>8. Modificaciones</h3>
+            <p>Nos reservamos el derecho de actualizar esta política de privacidad en cualquier momento. La fecha de última actualización se indicará al inicio de este documento.</p>
+        </div>
+    </div>
+
+    <!-- ════ AVISO LEGAL ════ -->
+    <div id="terms" class="legal-section">
+        <div class="section-container">
+            <a href="#" class="legal-back" onclick="hideLegal(); return false;">← Volver al inicio</a>
+            <h2>Aviso Legal</h2>
+            <p class="legal-date">Última actualización: marzo 2026</p>
+
+            <h3>1. Datos identificativos</h3>
+            <p>En cumplimiento del deber de información recogido en el artículo 10 de la Ley 34/2002, de Servicios de la Sociedad de la Información y del Comercio Electrónico (LSSI-CE), se informa que el titular de este sitio web es Enrique Tortosa Soriano, trabajador autónomo con domicilio en la Comunidad Valenciana, España.</p>
+
+            <h3>2. Objeto</h3>
+            <p>Este sitio web tiene como finalidad informar sobre la actividad profesional de desarrollo de aplicaciones móviles del titular, así como presentar los proyectos y aplicaciones publicados.</p>
+
+            <h3>3. Propiedad intelectual</h3>
+            <p>Todos los contenidos de este sitio web, incluyendo textos, imágenes, logotipos, diseño gráfico y código fuente, son propiedad de Enrique Tortosa Soriano o de terceros que han autorizado su uso. Queda prohibida su reproducción, distribución o transformación sin autorización expresa.</p>
+
+            <h3>4. Limitación de responsabilidad</h3>
+            <p>El titular no se responsabiliza de los daños que pudieran derivarse del uso de las aplicaciones publicadas ni de posibles errores en la información proporcionada. Las aplicaciones acceden a datos públicos de las administraciones correspondientes, sin garantizar su exactitud o disponibilidad.</p>
+
+            <h3>5. Legislación aplicable</h3>
+            <p>Este aviso legal se rige por la legislación española vigente. Para cualquier controversia que pudiera derivarse del acceso o uso de este sitio web, las partes se someten a la jurisdicción de los juzgados y tribunales de la Comunidad Valenciana.</p>
+        </div>
+    </div>
+
+    <!-- ════ SCRIPTS ════ -->
+    <script>
+        // ── Intersection Observer for fade-in
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add('visible');
+                    }, i * 80);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        // ── Legal pages toggle
+        function showLegal(id) {
+            document.getElementById('main-site').style.display = 'none';
+            document.getElementById(id).classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function hideLegal() {
+            document.querySelectorAll('.legal-section').forEach(s => s.classList.remove('active'));
+            document.getElementById('main-site').style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // ── Close mobile nav on link click
+        document.querySelectorAll('.nav-links a').forEach(a => {
+            a.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('open');
+            });
+        });
+    </script>
+
+</body>
+</html>
